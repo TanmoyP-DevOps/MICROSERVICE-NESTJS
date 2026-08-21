@@ -1,0 +1,21 @@
+services:
+    mongoDbLocal:
+        image: mongo:latest
+        container_name: mongoDbLocal
+        volumes:
+            - ~/docker/$COMPOSE_PROJECT_NAME/mongo/data:/docker-data/db
+        restart: always
+        environment:
+            - MONGO_INITDB_DATABASE=localBoilerPlateDB
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+            - PROJECT_NET
+        ports:
+            - 27017:27017
+        networks:
+            net: {}
+
+networks:
+    net:
+        external: true
+        name: $PROJECT_NET

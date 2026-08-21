@@ -1,0 +1,25 @@
+services:
+    redis-local:
+        image: redis:alpine
+        ulimits:
+            memlock: -1
+        container_name: redis
+        command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD --port $$REDIS_PORT"
+        environment:
+            - REDIS_PASSWORD
+            - REDIS_PORT
+        restart: always
+        volumes:
+            - ~/docker/$COMPOSE_PROJECT_NAME/local/redis-data:/data
+        networks:
+            net: {}
+        ports:
+            - ${REDIS_PORT}:${REDIS_PORT}
+
+networks:
+    net:
+        external: true
+        name: $PROJECT_NET
+
+volumes:
+    redis-data:

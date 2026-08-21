@@ -1,0 +1,20 @@
+services:
+    autoheal:
+        image: willfarrell/autoheal:latest
+        container_name: autoheal
+        restart: unless-stopped
+        env_file:
+            - ${ENV_FILE}
+        environment:
+            - AUTOHEAL_CONTAINER_LABEL=autoheal
+            - AUTOHEAL_INTERVAL=30
+            - AUTOHEAL_START_PERIOD=180
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            net: {}
+
+networks:
+    net:
+        external: true
+        name: $PROJECT_NET

@@ -1,0 +1,23 @@
+services:
+    gateway-rest:
+        image: ${REGISTRY}/gateway-rest/${BRANCH}:latest
+        container_name: ms-nestjs-gateway-rest
+        env_file:
+            - ${ENV_FILE}
+        restart: unless-stopped
+        healthcheck:
+            test: 'curl -f http://127.0.0.1:${GATEWAY_REST_PORT}/v1/gateway/ready || exit 1'
+            interval: 10s
+            timeout: 5s
+            retries: 30
+            start_period: 10s
+        ports:
+            - ${GATEWAY_REST_PORT}:${GATEWAY_REST_PORT}
+        labels:
+            - autoheal=true
+        networks:
+            net: {}
+networks:
+    net:
+        external: true
+        name: $PROJECT_NET

@@ -1,0 +1,34 @@
+services:
+    mongo-test:
+        image: mongo:latest
+        container_name: mongo-test
+        restart: always
+        environment:
+            - MONGO_INITDB_DATABASE=$MONGO_DB_NAME
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+            - PROJECT_NET
+        networks:
+            net: {}
+        ports:
+            - 27963:27017
+
+    redis-test:
+        image: redis:alpine
+        ulimits:
+            memlock: -1
+        container_name: redis-test
+        command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+        environment:
+            - REDIS_PASSWORD
+        restart: always
+        volumes:
+            - ~/docker/$COMPOSE_PROJECT_NAME/test/redis-data:/data
+        ports:
+            - 6378:6379
+        networks:
+            net: {}
+networks:
+    net:
+        external: true
+        name: $PROJECT_NET

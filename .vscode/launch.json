@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Gateway Rest",
+            "request": "launch",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "node",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "start:debug:gateway:rest"],
+            "outputCapture": "std"
+        },
+        {
+            "name": "Items MS",
+            "request": "launch",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "node",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "start:debug:items"],
+            "outputCapture": "std"
+        }
+    ]
+}
